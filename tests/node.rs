@@ -14,8 +14,8 @@ fn hsl_basic() {
     });
     assert_eq!(expected, get_hsl("hsl(240, 100%, 50.5%)"));
     assert_eq!(expected, get_hsl("hsl(240 100% 50.5%)"));
-    assert_eq!(expected, get_hsl("hsl(240deg, 100%, 50.5%)"));
-    assert_eq!(expected, get_hsl("hsl(240deg 100% 50.5%)"));
+    assert_eq!(expected, get_hsl("hsla(240deg, 100%, 50.5%)"));
+    assert_eq!(expected, get_hsl("hsla(240deg 100% 50.5%)"));
 }
 
 #[wasm_bindgen_test]
@@ -26,8 +26,10 @@ fn hsl_zero() {
         l: 0.0,
         a: 1.0,
     });
-    assert_eq!(expected, get_hsl("hsla(0, 0%, 0%)"));
-    assert_eq!(expected, get_hsl("hsla(0 0% 0%)"));
+    assert_eq!(expected, get_hsl("hsl(0, 0%, 0%)"));
+    assert_eq!(expected, get_hsl("hsl(0 0% 0%)"));
+    assert_eq!(expected, get_hsl("hsla(0deg, 0%, 0%)"));
+    assert_eq!(expected, get_hsl("hsla(0deg 0% 0%)"));
 }
 
 #[wasm_bindgen_test]
@@ -38,8 +40,10 @@ fn hsl_range() {
         l: 100.0,
         a: 1.0,
     });
-    assert_eq!(expected, get_hsl("hsla(400, 10%, 200%)"));
-    assert_eq!(expected, get_hsl("hsla(400 10% 200%)"));
+    assert_eq!(expected, get_hsl("hsl(400, 10%, 200%)"));
+    assert_eq!(expected, get_hsl("hsl(400 10% 200%)"));
+    assert_eq!(expected, get_hsl("hsla(400deg, 10%, 200%)"));
+    assert_eq!(expected, get_hsl("hsla(400deg 10% 200%)"));
 }
 
 #[wasm_bindgen_test]
@@ -52,6 +56,8 @@ fn hsl_operator_pos() {
     });
     assert_eq!(expected, get_hsl("hsl(+240, +100%, +50.5%)"));
     assert_eq!(expected, get_hsl("hsl(+240 +100% +50.5%)"));
+    assert_eq!(expected, get_hsl("hsla(+240deg, +100%, +50.5%)"));
+    assert_eq!(expected, get_hsl("hsla(+240deg +100% +50.5%)"));
 }
 
 #[wasm_bindgen_test]
@@ -64,6 +70,8 @@ fn hsl_operator_neg() {
     });
     assert_eq!(expected, get_hsl("hsl(-240, -100%, -50.5%)"));
     assert_eq!(expected, get_hsl("hsl(-240 -100% -50.5%)"));
+    assert_eq!(expected, get_hsl("hsla(-240deg, -100%, -50.5%)"));
+    assert_eq!(expected, get_hsl("hsla(-240deg -100% -50.5%)"));
 }
 
 #[wasm_bindgen_test]
@@ -74,8 +82,15 @@ fn hsl_alpha() {
         l: 50.5,
         a: 0.2,
     });
-    assert_eq!(expected, get_hsl("hsla(240, 100%, 50.5%, 0.2)"));
-    assert_eq!(expected, get_hsl("hsla(240 100% 50.5% / 0.2)"));
+    assert_eq!(expected, get_hsl("hsl(240, 100%, 50.5%, 0.2)"));
+    assert_eq!(expected, get_hsl("hsl(240 100% 50.5% / 0.2)"));
+    assert_eq!(expected, get_hsl("hsla(240deg, 100%, 50.5%, 0.2)"));
+    assert_eq!(expected, get_hsl("hsla(240deg 100% 50.5% / 0.2)"));
+
+    assert_eq!(expected, get_hsl("hsl(240, 100%, 50.5%, 20%)"));
+    assert_eq!(expected, get_hsl("hsl(240 100% 50.5% / 20%)"));
+    assert_eq!(expected, get_hsl("hsla(240deg, 100%, 50.5%, 20%)"));
+    assert_eq!(expected, get_hsl("hsla(240deg 100% 50.5% / 20%)"));
 }
 
 #[wasm_bindgen_test]
@@ -86,8 +101,15 @@ fn hsl_alpha_zero() {
         l: 0.0,
         a: 0.0,
     });
-    assert_eq!(expected, get_hsl("hsla(0, 0%, 0%, 0)"));
-    assert_eq!(expected, get_hsl("hsla(0 0% 0% / 0)"));
+    assert_eq!(expected, get_hsl("hsl(0, 0%, 0%, 0)"));
+    assert_eq!(expected, get_hsl("hsl(0 0% 0% / 0)"));
+    assert_eq!(expected, get_hsl("hsla(0deg, 0%, 0%, 0)"));
+    assert_eq!(expected, get_hsl("hsla(0deg 0% 0% / 0)"));
+
+    assert_eq!(expected, get_hsl("hsl(0, 0%, 0%, 0%)"));
+    assert_eq!(expected, get_hsl("hsl(0 0% 0% / 0%)"));
+    assert_eq!(expected, get_hsl("hsla(0deg, 0%, 0%, 0%)"));
+    assert_eq!(expected, get_hsl("hsla(0deg 0% 0% / 0%)"));
 }
 
 #[wasm_bindgen_test]
@@ -98,8 +120,15 @@ fn hsl_alpha_range() {
         l: 100.0,
         a: 1.0,
     });
-    assert_eq!(expected, get_hsl("hsla(400, 10%, 200%, 10)"));
-    assert_eq!(expected, get_hsl("hsla(400 10% 200% / 10)"));
+    assert_eq!(expected, get_hsl("hsl(400, 10%, 200%, 10)"));
+    assert_eq!(expected, get_hsl("hsl(400 10% 200% / 10)"));
+    assert_eq!(expected, get_hsl("hsla(400deg, 10%, 200%, 10)"));
+    assert_eq!(expected, get_hsl("hsla(400deg 10% 200% / 10)"));
+
+    assert_eq!(expected, get_hsl("hsl(400, 10%, 200%, 1000%)"));
+    assert_eq!(expected, get_hsl("hsl(400 10% 200% / 1000%)"));
+    assert_eq!(expected, get_hsl("hsla(400deg, 10%, 200%, 1000%)"));
+    assert_eq!(expected, get_hsl("hsla(400deg 10% 200% / 1000%)"));
 }
 
 #[wasm_bindgen_test]
@@ -112,6 +141,13 @@ fn hsl_alpha_pos() {
     });
     assert_eq!(expected, get_hsl("hsl(+240, +100%, +50.5%, +0.8)"));
     assert_eq!(expected, get_hsl("hsl(+240 +100% +50.5% / +0.8)"));
+    assert_eq!(expected, get_hsl("hsla(+240deg, +100%, +50.5%, +0.8)"));
+    assert_eq!(expected, get_hsl("hsla(+240deg +100% +50.5% / +0.8)"));
+
+    assert_eq!(expected, get_hsl("hsl(+240, +100%, +50.5%, +80%)"));
+    assert_eq!(expected, get_hsl("hsl(+240 +100% +50.5% / +80%)"));
+    assert_eq!(expected, get_hsl("hsla(+240deg, +100%, +50.5%, +80%)"));
+    assert_eq!(expected, get_hsl("hsla(+240deg +100% +50.5% / +80%)"));
 }
 
 #[wasm_bindgen_test]
@@ -124,6 +160,13 @@ fn hsl_alpha_neg() {
     });
     assert_eq!(expected, get_hsl("hsl(-240, -100%, -50.5%, -1)"));
     assert_eq!(expected, get_hsl("hsl(-240 -100% -50.5% / -1)"));
+    assert_eq!(expected, get_hsl("hsla(-240deg, -100%, -50.5%, -1)"));
+    assert_eq!(expected, get_hsl("hsla(-240deg -100% -50.5% / -1)"));
+
+    assert_eq!(expected, get_hsl("hsl(-240, -100%, -50.5%, -100%)"));
+    assert_eq!(expected, get_hsl("hsl(-240 -100% -50.5% / -100%)"));
+    assert_eq!(expected, get_hsl("hsla(-240deg, -100%, -50.5%, -100%)"));
+    assert_eq!(expected, get_hsl("hsla(-240deg -100% -50.5% / -100%)"));
 }
 
 #[wasm_bindgen_test]
@@ -132,30 +175,51 @@ fn hsl_combined() {
         h: 240.0,
         s: 100.0,
         l: 50.5,
-        a: 0.0,
+        a: 0.202,
     });
-    assert_eq!(expected, get_hsl("hsl(+240deg, 100%, 50.5%, -0.2)"));
-    assert_eq!(expected, get_hsl("hsl(+240deg 100% 50.5% / -0.2)"));
-}
+    assert_eq!(expected, get_hsl("hsl(+240, 100%, 50.5%, 0.202)"));
+    assert_eq!(expected, get_hsl("hsl(+240 100% 50.5% / 0.202)"));
+    assert_eq!(expected, get_hsl("hsla(+240deg, 100%, 50.5%, 0.202)"));
+    assert_eq!(expected, get_hsl("hsla(+240deg 100% 50.5% / 0.202)"));
 
-#[wasm_bindgen_test]
-fn hsl_alpha_percent() {
-    assert_eq!(None, get_hsl("hsla(250, 100%, 50%, 50%)"));
-    assert_eq!(None, get_hsl("hsla(250 100% 50% / 50%)"));
+    assert_eq!(expected, get_hsl("hsl(-120, 100%, 50.5%, 0.202)"));
+    assert_eq!(expected, get_hsl("hsl(-120 100% 50.5% / 0.202)"));
+    assert_eq!(expected, get_hsl("hsla(-120deg, 100%, 50.5%, 0.202)"));
+    assert_eq!(expected, get_hsl("hsla(-120deg 100% 50.5% / 0.202)"));
+
+    assert_eq!(expected, get_hsl("hsl(+240, 100%, 50.5%, 20.2%)"));
+    assert_eq!(expected, get_hsl("hsl(+240 100% 50.5% / 20.2%)"));
+    assert_eq!(expected, get_hsl("hsla(+240deg, 100%, 50.5%, 20.2%)"));
+    assert_eq!(expected, get_hsl("hsla(+240deg 100% 50.5% / 20.2%)"));
+
+    assert_eq!(expected, get_hsl("hsl(-120, 100%, 50.5%, 20.2%)"));
+    assert_eq!(expected, get_hsl("hsl(-120 100% 50.5% / 20.2%)"));
+    assert_eq!(expected, get_hsl("hsla(-120deg, 100%, 50.5%, 20.2%)"));
+    assert_eq!(expected, get_hsl("hsla(-120deg 100% 50.5% / 20.2%)"));
 }
 
 #[wasm_bindgen_test]
 fn hsl_extra_at_start() {
     assert_eq!(None, get_hsl("1234hsl(41, 50%, 45%)"));
     assert_eq!(None, get_hsl("1234hsl(41 50% 45%)"));
-    assert_eq!(None, get_hsl("1234hsl(41 50% 45% / 3)"));
+}
+
+fn hsla_extra_in_middle() {
+    assert_eq!(None, get_hsl("hsl1(41, 50%, 45%)"));
+    assert_eq!(None, get_hsl("hsl(41, 1, 50%, 45%)"));
+    assert_eq!(None, get_hsl("hsl(41, 50%1, 45%1)"));
+    assert_eq!(None, get_hsl("hsl(41, 50%, 45%)"));
+
+    assert_eq!(None, get_hsl("hsl1(41 50% 45%)"));
+    assert_eq!(None, get_hsl("hsl(41 1 50% 45%)"));
+    assert_eq!(None, get_hsl("hsl(41 50%1 45%)"));
+    assert_eq!(None, get_hsl("hsl(41 50% 45%1)"));
 }
 
 #[wasm_bindgen_test]
 fn hsl_extra_at_end() {
     assert_eq!(None, get_hsl("hsl(41, 50%, 45%)1234"));
     assert_eq!(None, get_hsl("hsl(41 50% 45%)1234"));
-    assert_eq!(None, get_hsl("hsl(41 50% 45% / 3)1234"));
 }
 
 #[wasm_bindgen_test]
@@ -182,6 +246,8 @@ fn hwb_zero() {
     });
     assert_eq!(expected, get_hwb("hwb(0, 0%, 0%)"));
     assert_eq!(expected, get_hwb("hwb(0 0% 0%)"));
+    assert_eq!(expected, get_hwb("hwb(0deg, 0%, 0%)"));
+    assert_eq!(expected, get_hwb("hwb(0deg 0% 0%)"));
 }
 
 #[wasm_bindgen_test]
@@ -194,6 +260,8 @@ fn hwb_range() {
     });
     assert_eq!(expected, get_hwb("hwb(400, 10%, 200%)"));
     assert_eq!(expected, get_hwb("hwb(400 10% 200%)"));
+    assert_eq!(expected, get_hwb("hwb(400deg, 10%, 200%)"));
+    assert_eq!(expected, get_hwb("hwb(400deg 10% 200%)"));
 }
 
 #[wasm_bindgen_test]
@@ -206,6 +274,8 @@ fn hwb_operator_pos() {
     });
     assert_eq!(expected, get_hwb("hwb(+240, +100%, +50.5%)"));
     assert_eq!(expected, get_hwb("hwb(+240 +100% +50.5%)"));
+    assert_eq!(expected, get_hwb("hwb(+240deg, +100%, +50.5%)"));
+    assert_eq!(expected, get_hwb("hwb(+240deg +100% +50.5%)"));
 }
 
 #[wasm_bindgen_test]
@@ -218,6 +288,8 @@ fn hwb_operator_neg() {
     });
     assert_eq!(expected, get_hwb("hwb(-240, -100%, -50.5%)"));
     assert_eq!(expected, get_hwb("hwb(-240 -100% -50.5%)"));
+    assert_eq!(expected, get_hwb("hwb(-240deg, -100%, -50.5%)"));
+    assert_eq!(expected, get_hwb("hwb(-240deg -100% -50.5%)"));
 }
 
 #[wasm_bindgen_test]
@@ -230,6 +302,8 @@ fn hwb_alpha() {
     });
     assert_eq!(expected, get_hwb("hwb(240, 100%, 50.5%, 0.2)"));
     assert_eq!(expected, get_hwb("hwb(240 100% 50.5% / 0.2)"));
+    assert_eq!(expected, get_hwb("hwb(240deg, 100%, 50.5%, 0.2)"));
+    assert_eq!(expected, get_hwb("hwb(240deg 100% 50.5% / 0.2)"));
 }
 
 #[wasm_bindgen_test]
@@ -242,6 +316,13 @@ fn hwb_alpha_zero() {
     });
     assert_eq!(expected, get_hwb("hwb(0, 0%, 0%, 0)"));
     assert_eq!(expected, get_hwb("hwb(0 0% 0% / 0)"));
+    assert_eq!(expected, get_hwb("hwb(0deg, 0%, 0%, 0)"));
+    assert_eq!(expected, get_hwb("hwb(0deg 0% 0% / 0)"));
+
+    assert_eq!(expected, get_hwb("hwb(0, 0%, 0%, 0%)"));
+    assert_eq!(expected, get_hwb("hwb(0 0% 0% / 0%)"));
+    assert_eq!(expected, get_hwb("hwb(0deg, 0%, 0%, 0%)"));
+    assert_eq!(expected, get_hwb("hwb(0deg 0% 0% / 0%)"));
 }
 
 #[wasm_bindgen_test]
@@ -254,6 +335,13 @@ fn hwb_alpha_range() {
     });
     assert_eq!(expected, get_hwb("hwb(400, 10%, 200%, 10)"));
     assert_eq!(expected, get_hwb("hwb(400 10% 200% / 10)"));
+    assert_eq!(expected, get_hwb("hwb(400deg, 10%, 200%, 10)"));
+    assert_eq!(expected, get_hwb("hwb(400deg 10% 200% / 10)"));
+
+    assert_eq!(expected, get_hwb("hwb(400, 10%, 200%, 1000%)"));
+    assert_eq!(expected, get_hwb("hwb(400 10% 200% / 1000%)"));
+    assert_eq!(expected, get_hwb("hwb(400deg, 10%, 200%, 1000%)"));
+    assert_eq!(expected, get_hwb("hwb(400deg 10% 200% / 1000%)"));
 }
 
 #[wasm_bindgen_test]
@@ -266,6 +354,13 @@ fn hwb_alpha_pos() {
     });
     assert_eq!(expected, get_hwb("hwb(+240, +100%, +50.5%, +0.8)"));
     assert_eq!(expected, get_hwb("hwb(+240 +100% +50.5% / +0.8)"));
+    assert_eq!(expected, get_hwb("hwb(+240deg, +100%, +50.5%, +0.8)"));
+    assert_eq!(expected, get_hwb("hwb(+240deg +100% +50.5% / +0.8)"));
+
+    assert_eq!(expected, get_hwb("hwb(+240, +100%, +50.5%, +80%)"));
+    assert_eq!(expected, get_hwb("hwb(+240 +100% +50.5% / +80%)"));
+    assert_eq!(expected, get_hwb("hwb(+240deg, +100%, +50.5%, +80%)"));
+    assert_eq!(expected, get_hwb("hwb(+240deg +100% +50.5% / +80%)"));
 }
 
 #[wasm_bindgen_test]
@@ -278,6 +373,13 @@ fn hwb_alpha_neg() {
     });
     assert_eq!(expected, get_hwb("hwb(-240, -100%, -50.5%, -1)"));
     assert_eq!(expected, get_hwb("hwb(-240 -100% -50.5% / -1)"));
+    assert_eq!(expected, get_hwb("hwb(-240deg, -100%, -50.5%, -1)"));
+    assert_eq!(expected, get_hwb("hwb(-240deg -100% -50.5% / -1)"));
+
+    assert_eq!(expected, get_hwb("hwb(-240, -100%, -50.5%, -100%)"));
+    assert_eq!(expected, get_hwb("hwb(-240 -100% -50.5% / -100%)"));
+    assert_eq!(expected, get_hwb("hwb(-240deg, -100%, -50.5%, -100%)"));
+    assert_eq!(expected, get_hwb("hwb(-240deg -100% -50.5% / -100%)"));
 }
 
 #[wasm_bindgen_test]
@@ -286,28 +388,49 @@ fn hwb_combined() {
         h: 240.0,
         w: 100.0,
         b: 50.5,
-        a: 0.0,
+        a: 0.202,
     });
-    assert_eq!(expected, get_hwb("hwb(+240deg, 100%, 50.5%, -0.2)"));
-    assert_eq!(expected, get_hwb("hwb(+240deg 100% 50.5% / -0.2)"));
-}
+    assert_eq!(expected, get_hwb("hwb(+240, 100%, 50.5%, 0.202)"));
+    assert_eq!(expected, get_hwb("hwb(+240 100% 50.5% / 0.202)"));
+    assert_eq!(expected, get_hwb("hwb(+240deg, 100%, 50.5%, 0.202)"));
+    assert_eq!(expected, get_hwb("hwb(+240deg 100% 50.5% / 0.202)"));
 
-#[wasm_bindgen_test]
-fn hwb_alpha_percent() {
-    assert_eq!(None, get_hwb("hwb(250, 100%, 50%, 50%)"));
-    assert_eq!(None, get_hwb("hwb(250 100% 50% / 50%)"));
+    assert_eq!(expected, get_hwb("hwb(-120, 100%, 50.5%, 0.202)"));
+    assert_eq!(expected, get_hwb("hwb(-120 100% 50.5% / 0.202)"));
+    assert_eq!(expected, get_hwb("hwb(-120deg, 100%, 50.5%, 0.202)"));
+    assert_eq!(expected, get_hwb("hwb(-120deg 100% 50.5% / 0.202)"));
+
+    assert_eq!(expected, get_hwb("hwb(+240, 100%, 50.5%, 20.2%)"));
+    assert_eq!(expected, get_hwb("hwb(+240 100% 50.5% / 20.2%)"));
+    assert_eq!(expected, get_hwb("hwb(+240deg, 100%, 50.5%, 20.2%)"));
+    assert_eq!(expected, get_hwb("hwb(+240deg 100% 50.5% / 20.2%)"));
+
+    assert_eq!(expected, get_hwb("hwb(-120, 100%, 50.5%, 20.2%)"));
+    assert_eq!(expected, get_hwb("hwb(-120 100% 50.5% / 20.2%)"));
+    assert_eq!(expected, get_hwb("hwb(-120deg, 100%, 50.5%, 20.2%)"));
+    assert_eq!(expected, get_hwb("hwb(-120deg 100% 50.5% / 20.2%)"));
 }
 
 #[wasm_bindgen_test]
 fn hwb_extra_at_start() {
-    assert_eq!(None, get_hwb("1234hwb(41, 50%, 45%)"));
-    assert_eq!(None, get_hwb("1234hwb(41 50% 45%)"));
-    assert_eq!(None, get_hwb("1234hwb(41 50% 45% / 3)"));
+    assert_eq!(None, get_hwb("1hwb(41, 50%, 45%)"));
+    assert_eq!(None, get_hwb("1hwb(41 50% 45%)"));
+}
+
+fn hwb_extra_in_middle() {
+    assert_eq!(None, get_hwb("hwb1(41, 50%, 45%)"));
+    assert_eq!(None, get_hwb("hwb(41, 1, 50%, 45%)"));
+    assert_eq!(None, get_hwb("hwb(41, 50%1, 45%1)"));
+    assert_eq!(None, get_hwb("hwb(41, 50%, 45%)"));
+
+    assert_eq!(None, get_hwb("hwb1(41 50% 45%)"));
+    assert_eq!(None, get_hwb("hwb(41 1 50% 45%)"));
+    assert_eq!(None, get_hwb("hwb(41 50%1 45%)"));
+    assert_eq!(None, get_hwb("hwb(41 50% 45%1)"));
 }
 
 #[wasm_bindgen_test]
 fn hwb_extra_at_end() {
-    assert_eq!(None, get_hwb("hwb(41, 50%, 45%)1234"));
-    assert_eq!(None, get_hwb("hwb(41 50% 45%)1234"));
-    assert_eq!(None, get_hwb("hwb(41 50% 45% / 3)1234"));
+    assert_eq!(None, get_hwb("hwb(41, 50%, 45%)1"));
+    assert_eq!(None, get_hwb("hwb(41 50% 45%)1"));
 }
