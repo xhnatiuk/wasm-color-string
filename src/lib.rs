@@ -1,4 +1,5 @@
 mod utils;
+use regex::Regex;
 
 use wasm_bindgen::prelude::*;
 
@@ -9,11 +10,40 @@ use wasm_bindgen::prelude::*;
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 #[wasm_bindgen]
-extern "C" {
-    fn alert(s: &str);
+#[derive(Debug, PartialEq)]
+pub struct Hsla {
+    pub h: f32,
+    pub s: f32,
+    pub l: f32,
+    pub a: f32,
+}
+
+fn clamp(num: f32, min: f32, max: f32) -> f32 {
+    num.max(min).min(max)
 }
 
 #[wasm_bindgen]
-pub fn greet() {
-    alert("Hello, wasm-color-string!");
+pub fn get_hsla(string: &str) -> Option<Hsla> {
+    let re = Regex::new(r"^hsla?\(\s*([+-]?(?:\d{0,3}\.)?\d+)(?:deg)?\s*,?\s*([+-]?[\d\.]+)%\s*,?\s*([+-]?[\d\.]+)%\s*(?:[,|/]\s*([+-]?[\d\.]+)\s*)?\)$").unwrap();
+    let captures = re.captures(string)?;
+    let h: f32 = match captures.get(1)?.as_str().parse::<f32>() {
+        Ok(num) => clamp(num, 0.0, 360.0),
+        Err(_e) => return None,
+    };
+    let s: f32 = match captures.get(2)?.as_str().parse::<f32>() {
+        Ok(num) => clamp(num, 0.0, 100.0),
+        Err(_e) => return None,
+    };
+    let l: f32 = match captures.get(3)?.as_str().parse::<f32>() {
+        Ok(num) => clamp(num, 0.0, 100.0),
+        Err(_e) => return None,
+    };
+    let a: f32 = match captures.get(4) {
+        Some(value) => match value.as_str().parse::<f32>() {
+            Ok(num) => clamp(num, 0.0, 1.0),
+            Err(_e) => return None,
+        },
+        None => 1.0,
+    };
+    Some(Hsla { h, s, l, a })
 }
