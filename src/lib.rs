@@ -1,29 +1,23 @@
 mod utils;
 use regex::Regex;
-
 use wasm_bindgen::prelude::*;
 
-// When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
-// allocator.
+// When the `wee_alloc` feature is enabled, use `wee_alloc` as the global allocator.
 #[cfg(feature = "wee_alloc")]
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 #[wasm_bindgen]
 #[derive(Debug, PartialEq)]
-pub struct Hsla {
+pub struct Hsl {
     pub h: f32,
     pub s: f32,
     pub l: f32,
     pub a: f32,
 }
 
-fn clamp(num: f32, min: f32, max: f32) -> f32 {
-    num.max(min).min(max)
-}
-
 #[wasm_bindgen]
-pub fn get_hsla(string: &str) -> Option<Hsla> {
+pub fn get_hsl(string: &str) -> Option<Hsl> {
     let re = Regex::new(r"^hsla?\(\s*([+-]?(?:\d{0,3}\.)?\d+)(?:deg)?\s*,?\s*([+-]?[\d\.]+)%\s*,?\s*([+-]?[\d\.]+)%\s*(?:[,|/]\s*([+-]?[\d\.]+)\s*)?\)$").unwrap();
     let captures = re.captures(string)?;
     let h: f32 = match captures.get(1)?.as_str().parse::<f32>() {
@@ -45,5 +39,9 @@ pub fn get_hsla(string: &str) -> Option<Hsla> {
         },
         None => 1.0,
     };
-    Some(Hsla { h, s, l, a })
+    Some(Hsl { h, s, l, a })
+}
+
+fn clamp(num: f32, min: f32, max: f32) -> f32 {
+    num.max(min).min(max)
 }
