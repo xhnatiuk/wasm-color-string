@@ -5,6 +5,30 @@ use wasm_bindgen_test::*;
 use wasm_color_string::*;
 
 #[wasm_bindgen_test]
+fn color() {
+    let expected_rgb = Some(Color(Model::Rgb, 204.0, 204.0, 204.0, 1.0));
+    let expected_hsl = Some(Color(Model::Hsl, 240.0, 100.0, 50.5, 1.0));
+    let expected_hwb = Some(Color(Model::Hwb, 240.0, 100.0, 50.5, 1.0));
+
+    assert_eq!(expected_rgb, get_color("#CCC"));
+    assert_eq!(expected_rgb, get_color("#CCCCCC"));
+    assert_eq!(expected_rgb, get_color("rgb(204, 204, 204)"));
+    assert_eq!(expected_rgb, get_color("rgb(204 204 204)"));
+    assert_eq!(expected_rgb, get_color("rgb(80%, 80%, 80%)"));
+    assert_eq!(expected_rgb, get_color("rgb(80% 80% 80%)"));
+
+    assert_eq!(expected_hsl, get_color("hsl(240, 100%, 50.5%)"));
+    assert_eq!(expected_hsl, get_color("hsl(240 100% 50.5%)"));
+    assert_eq!(expected_hsl, get_color("hsla(240deg, 100%, 50.5%)"));
+    assert_eq!(expected_hsl, get_color("hsla(240deg 100% 50.5%)"));
+
+    assert_eq!(expected_hwb, get_color("hwb(240, 100%, 50.5%)"));
+    assert_eq!(expected_hwb, get_color("hwb(240 100% 50.5%)"));
+    assert_eq!(expected_hwb, get_color("hwb(240deg, 100%, 50.5%)"));
+    assert_eq!(expected_hwb, get_color("hwb(240deg 100% 50.5%)"));
+}
+
+#[wasm_bindgen_test]
 fn rgb_basic() {
     let expected = Some(Rgb {
         r: 204,

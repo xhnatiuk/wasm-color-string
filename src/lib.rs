@@ -11,6 +11,18 @@ mod utils;
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 #[wasm_bindgen]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub enum Model {
+    Rgb,
+    Hsl,
+    Hwb,
+}
+
+#[wasm_bindgen]
+#[derive(Debug, PartialEq)]
+pub struct Color(pub Model, pub f32, pub f32, pub f32, pub f32);
+
+#[wasm_bindgen]
 #[derive(Debug, PartialEq)]
 pub struct Rgb {
     pub r: u8,
@@ -35,6 +47,33 @@ pub struct Hwb {
     pub w: f32,
     pub b: f32,
     pub a: f32,
+}
+
+#[wasm_bindgen]
+pub fn get_color(string: &str) -> Option<Color> {
+    let prefix = &string[0..3];
+    match prefix {
+        "hsl" => {
+            println!("HSL");
+            let hsl = get_hsl(string)?;
+            Some(Color(Model::Hsl, hsl.h, hsl.s, hsl.l, hsl.a as f32))
+        }
+        "hwb" => {
+            println!("HWB");
+            let hwb = get_hwb(string)?;
+            Some(Color(Model::Hwb, hwb.h, hwb.w, hwb.b, hwb.a as f32))
+        }
+        _ => {
+            let rgb = get_rgb(string)?;
+            Some(Color(
+                Model::Rgb,
+                rgb.r as f32,
+                rgb.g as f32,
+                rgb.b as f32,
+                rgb.a as f32,
+            ))
+        }
+    }
 }
 
 #[wasm_bindgen]
