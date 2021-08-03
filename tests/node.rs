@@ -5,6 +5,214 @@ use wasm_bindgen_test::*;
 use wasm_color_string::*;
 
 #[wasm_bindgen_test]
+fn rgb_basic() {
+    let expected = Some(Rgb {
+        r: 204,
+        g: 204,
+        b: 204,
+        a: 1.0,
+    });
+    assert_eq!(expected, get_rgb("#CCC"));
+    assert_eq!(expected, get_rgb("#CCCCCC"));
+    assert_eq!(expected, get_rgb("rgb(204, 204, 204)"));
+    assert_eq!(expected, get_rgb("rgb(204 204 204)"));
+    assert_eq!(expected, get_rgb("rgb(80%, 80%, 80%)"));
+    assert_eq!(expected, get_rgb("rgb(80% 80% 80%)"));
+}
+
+#[wasm_bindgen_test]
+fn rgb_zero() {
+    let expected = Some(Rgb {
+        r: 0,
+        g: 0,
+        b: 0,
+        a: 1.0,
+    });
+    assert_eq!(expected, get_rgb("#000"));
+    assert_eq!(expected, get_rgb("#000000"));
+    assert_eq!(expected, get_rgb("rgb(0, 0, 0)"));
+    assert_eq!(expected, get_rgb("rgb(0 0 0)"));
+    assert_eq!(expected, get_rgb("rgb(0%, 0%, 0%)"));
+    assert_eq!(expected, get_rgb("rgb(0% 0% 0%)"));
+}
+
+#[wasm_bindgen_test]
+fn rgb_range() {
+    let expected = Some(Rgb {
+        r: 255,
+        g: 255,
+        b: 255,
+        a: 1.0,
+    });
+    assert_eq!(None, get_rgb("#GGG"));
+    assert_eq!(None, get_rgb("#GGGGGG"));
+    assert_eq!(None, get_rgb("rgb(510, 510, 510)"));
+    assert_eq!(None, get_rgb("rgb(510 510 510)"));
+    assert_eq!(expected, get_rgb("rgb(200%, 200%, 200%)"));
+    assert_eq!(expected, get_rgb("rgb(200% 200% 200%)"));
+}
+
+#[wasm_bindgen_test]
+fn rgb_pos() {
+    let expected = Some(Rgb {
+        r: 204,
+        g: 204,
+        b: 204,
+        a: 1.0,
+    });
+    assert_eq!(expected, get_rgb("rgb(+204, +204, +204)"));
+    assert_eq!(expected, get_rgb("rgb(+204 +204 +204)"));
+    assert_eq!(expected, get_rgb("rgb(+80%, +80%, +80%)"));
+    assert_eq!(expected, get_rgb("rgb(+80% +80% +80%)"));
+}
+
+#[wasm_bindgen_test]
+fn rgb_neg() {
+    let expected = Some(Rgb {
+        r: 0,
+        g: 0,
+        b: 0,
+        a: 1.0,
+    });
+    assert_eq!(None, get_rgb("rgb(-204, -204, -204)"));
+    assert_eq!(None, get_rgb("rgb(-204 -204 -204)"));
+    assert_eq!(expected, get_rgb("rgb(-80%, -80%, -80%)"));
+    assert_eq!(expected, get_rgb("rgb(-80% -80% -80%)"));
+}
+
+#[wasm_bindgen_test]
+fn rgb_alpha_basic() {
+    let expected = Some(Rgb {
+        r: 204,
+        g: 204,
+        b: 204,
+        a: 0.8,
+    });
+    assert_eq!(expected, get_rgb("#CCCC"));
+    assert_eq!(expected, get_rgb("#CCCCCCCC"));
+    assert_eq!(expected, get_rgb("rgb(204, 204, 204, 0.8)"));
+    assert_eq!(expected, get_rgb("rgb(204 204 204 / 0.8)"));
+    assert_eq!(expected, get_rgb("rgb(80%, 80%, 80%, 80%)"));
+    assert_eq!(expected, get_rgb("rgb(80% 80% 80% / 80%)"));
+}
+
+#[wasm_bindgen_test]
+fn rgb_alpha_zero() {
+    let expected = Some(Rgb {
+        r: 0,
+        g: 0,
+        b: 0,
+        a: 0.0,
+    });
+    assert_eq!(expected, get_rgb("#0000"));
+    assert_eq!(expected, get_rgb("#00000000"));
+    assert_eq!(expected, get_rgb("rgb(0, 0, 0, 0)"));
+    assert_eq!(expected, get_rgb("rgb(0 0 0 / 0)"));
+    assert_eq!(expected, get_rgb("rgb(0%, 0%, 0%, 0%)"));
+    assert_eq!(expected, get_rgb("rgb(0% 0% 0% / 0%)"));
+}
+
+#[wasm_bindgen_test]
+fn rgb_alpha_range() {
+    let expected = Some(Rgb {
+        r: 255,
+        g: 255,
+        b: 255,
+        a: 1.0,
+    });
+    assert_eq!(None, get_rgb("#GGG"));
+    assert_eq!(None, get_rgb("#GGGGGG"));
+    assert_eq!(None, get_rgb("rgb(510, 510, 510, 510)"));
+    assert_eq!(None, get_rgb("rgb(510 510 510 / 510)"));
+    assert_eq!(expected, get_rgb("rgb(200%, 200%, 200%, 200%)"));
+    assert_eq!(expected, get_rgb("rgb(200% 200% 200% / 200%)"));
+}
+
+#[wasm_bindgen_test]
+fn rgb_alpha_pos() {
+    let expected = Some(Rgb {
+        r: 204,
+        g: 204,
+        b: 204,
+        a: 0.8,
+    });
+    assert_eq!(expected, get_rgb("rgb(+204, +204, +204, +0.8)"));
+    assert_eq!(expected, get_rgb("rgb(+204 +204 +204 / +0.8)"));
+    assert_eq!(expected, get_rgb("rgb(+80%, +80%, +80%, +80%)"));
+    assert_eq!(expected, get_rgb("rgb(+80% +80% +80% / +80%)"));
+}
+
+#[wasm_bindgen_test]
+fn rgb_alpha_neg() {
+    let expected = Some(Rgb {
+        r: 0,
+        g: 0,
+        b: 0,
+        a: 0.0,
+    });
+    assert_eq!(None, get_rgb("rgb(-204, -204, -204, -0.8)"));
+    assert_eq!(None, get_rgb("rgb(-204 -204 -204 / -0.8)"));
+    assert_eq!(expected, get_rgb("rgb(-80%, -80%, -80%, -80%)"));
+    assert_eq!(expected, get_rgb("rgb(-80% -80% -80% / -80%)"));
+}
+
+#[wasm_bindgen_test]
+fn rgb_combined() {
+    let expected = Some(Rgb {
+        r: 204,
+        g: 204,
+        b: 204,
+        a: 0.8,
+    });
+
+    let expected_2 = Some(Rgb {
+        r: 0,
+        g: 0,
+        b: 0,
+        a: 0.0,
+    });
+
+    assert_eq!(expected, get_rgb("rgb(+204, +204, 204, +0.8)"));
+    assert_eq!(expected, get_rgb("rgb(+204 +204 204 / +0.8)"));
+    assert_eq!(None, get_rgb("rgb(-204, -204, 204, -0.8)"));
+    assert_eq!(None, get_rgb("rgb(-204 -204 204 / -0.8)"));
+
+    assert_eq!(expected, get_rgb("rgb(+80%, +80%, 80%, +80%)"));
+    assert_eq!(expected, get_rgb("rgb(+80% +80% 80% / +80%)"));
+    assert_eq!(expected_2, get_rgb("rgb(-80%, -80%, 0%, -80%)"));
+    assert_eq!(expected_2, get_rgb("rgb(-80% -80% 0% / -80%)"));
+}
+
+#[wasm_bindgen_test]
+fn rgb_extra_at_start() {
+    assert_eq!(None, get_rgb("1234rgb(50%, 50%, 50%)"));
+    assert_eq!(None, get_rgb("1234rgb(50% 50% 50%)"));
+}
+
+#[wasm_bindgen_test]
+fn rgb_extra_in_middle() {
+    assert_eq!(None, get_rgb("rgb1(50%, 50%, 50%, 50%)"));
+    assert_eq!(None, get_rgb("rgb1(50%, 1, 50%, 50%, 50%)"));
+    assert_eq!(None, get_rgb("rgb(50%1, 50%, 50%, 50%)"));
+    assert_eq!(None, get_rgb("rgb(50%, 50%1, 50% 50%1)"));
+    assert_eq!(None, get_rgb("rgb(50%, 50%, 50%1, 50%)"));
+    assert_eq!(None, get_rgb("rgb(50%, 50%, 50%, 50%1)"));
+
+    assert_eq!(None, get_rgb("rgb1(50% 50% 50% 50%)"));
+    assert_eq!(None, get_rgb("rgb(50% 1 50% 50% 50%)"));
+    assert_eq!(None, get_rgb("rgb(50%1 50% 50% 50%)"));
+    assert_eq!(None, get_rgb("rgb(50% 50%1 50% 50%)"));
+    assert_eq!(None, get_rgb("rgb(50% 50% 50%1 50%)"));
+    assert_eq!(None, get_rgb("rgb(50% 50% 50% 50%1)"));
+}
+
+#[wasm_bindgen_test]
+fn rgb_extra_at_end() {
+    assert_eq!(None, get_rgb("rgb(50%, 50%, 50%)1234"));
+    assert_eq!(None, get_rgb("rgb(50% 50% 50%)1234"));
+}
+
+#[wasm_bindgen_test]
 fn hsl_basic() {
     let expected = Some(Hsl {
         h: 240.0,
@@ -47,7 +255,7 @@ fn hsl_range() {
 }
 
 #[wasm_bindgen_test]
-fn hsl_operator_pos() {
+fn hsl_pos() {
     let expected = Some(Hsl {
         h: 240.0,
         s: 100.0,
@@ -61,7 +269,7 @@ fn hsl_operator_pos() {
 }
 
 #[wasm_bindgen_test]
-fn hsl_operator_neg() {
+fn hsl_neg() {
     let expected = Some(Hsl {
         h: 120.0,
         s: 0.0,
@@ -204,16 +412,19 @@ fn hsl_extra_at_start() {
     assert_eq!(None, get_hsl("1234hsl(41 50% 45%)"));
 }
 
-fn hsla_extra_in_middle() {
-    assert_eq!(None, get_hsl("hsl1(41, 50%, 45%)"));
-    assert_eq!(None, get_hsl("hsl(41, 1, 50%, 45%)"));
-    assert_eq!(None, get_hsl("hsl(41, 50%1, 45%1)"));
-    assert_eq!(None, get_hsl("hsl(41, 50%, 45%)"));
+#[wasm_bindgen_test]
+fn hsl_extra_in_middle() {
+    assert_eq!(None, get_hsl("hsl1(50%, 50%, 50%)"));
+    assert_eq!(None, get_hsl("hsl(50%, 1, 50%, 50%)"));
+    assert_eq!(None, get_hsl("hsl(50%1, 50%, 50%)"));
+    assert_eq!(None, get_hsl("hsl(50%, 50%1, 50%)"));
+    assert_eq!(None, get_hsl("hsl(50%, 50%, 50%1)"));
 
-    assert_eq!(None, get_hsl("hsl1(41 50% 45%)"));
-    assert_eq!(None, get_hsl("hsl(41 1 50% 45%)"));
-    assert_eq!(None, get_hsl("hsl(41 50%1 45%)"));
-    assert_eq!(None, get_hsl("hsl(41 50% 45%1)"));
+    assert_eq!(None, get_hsl("hsl1(50% 50% 50%)"));
+    assert_eq!(None, get_hsl("hsl1(50% 1 50% 50%)"));
+    assert_eq!(None, get_hsl("hsl(50%1 50% 50%)"));
+    assert_eq!(None, get_hsl("hsl(50% 50%1 50%)"));
+    assert_eq!(None, get_hsl("hsl(50% 50% 50%1)"));
 }
 
 #[wasm_bindgen_test]
@@ -265,7 +476,7 @@ fn hwb_range() {
 }
 
 #[wasm_bindgen_test]
-fn hwb_operator_pos() {
+fn hwb_pos() {
     let expected = Some(Hwb {
         h: 240.0,
         w: 100.0,
@@ -279,7 +490,7 @@ fn hwb_operator_pos() {
 }
 
 #[wasm_bindgen_test]
-fn hwb_operator_neg() {
+fn hwb_neg() {
     let expected = Some(Hwb {
         h: 120.0,
         w: 0.0,
@@ -417,16 +628,19 @@ fn hwb_extra_at_start() {
     assert_eq!(None, get_hwb("1hwb(41 50% 45%)"));
 }
 
+#[wasm_bindgen_test]
 fn hwb_extra_in_middle() {
-    assert_eq!(None, get_hwb("hwb1(41, 50%, 45%)"));
-    assert_eq!(None, get_hwb("hwb(41, 1, 50%, 45%)"));
-    assert_eq!(None, get_hwb("hwb(41, 50%1, 45%1)"));
-    assert_eq!(None, get_hwb("hwb(41, 50%, 45%)"));
+    assert_eq!(None, get_hwb("hwb1(50%, 50%, 50%)"));
+    assert_eq!(None, get_hwb("hwb(50%, 1, 50%, 50%)"));
+    assert_eq!(None, get_hwb("hwb(50%1, 50%, 50%)"));
+    assert_eq!(None, get_hwb("hwb(50%, 50%1, 50%)"));
+    assert_eq!(None, get_hwb("hwb(50%, 50%, 50%1)"));
 
-    assert_eq!(None, get_hwb("hwb1(41 50% 45%)"));
-    assert_eq!(None, get_hwb("hwb(41 1 50% 45%)"));
-    assert_eq!(None, get_hwb("hwb(41 50%1 45%)"));
-    assert_eq!(None, get_hwb("hwb(41 50% 45%1)"));
+    assert_eq!(None, get_hwb("hwb1(50% 50% 50%)"));
+    assert_eq!(None, get_hwb("hwb(50% 1 50% 50%)"));
+    assert_eq!(None, get_hwb("hwb(50%1 50% 50%)"));
+    assert_eq!(None, get_hwb("hwb(50% 50%1 50%)"));
+    assert_eq!(None, get_hwb("hwb(50% 50% 50%1)"));
 }
 
 #[wasm_bindgen_test]
