@@ -3,12 +3,11 @@ extern crate lazy_static;
 
 use regex::{Match, Regex};
 use wasm_bindgen::prelude::*;
-mod utils;
+use wee_alloc::WeeAlloc;
 
-// When the `wee_alloc` feature is enabled, use `wee_alloc` as the global allocator.
-#[cfg(feature = "wee_alloc")]
+// Use `wee_alloc` as the global allocator.
 #[global_allocator]
-static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
+static ALLOC: WeeAlloc = WeeAlloc::INIT;
 
 #[wasm_bindgen]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
